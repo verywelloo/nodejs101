@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>JavaScript Promises</h2>
+    <p id="demo"></p>
+    <script>
+        function myDisplayer(some) {
+            document.getElementById('demo').innerHTML = some;
+        }
+
+        let myPromise = new Promise(function(myReslove, myReject) {
+            let x = 0;
+            // some code (try to change x to 5)
+            if (x == 0) {
+                myReslove("OK");
+            } else {
+                myReject("Error");
+            }
+        });
+
+        myPromise.then(
+            function(value) {myDisplayer(value);},
+            function(error) {myDisplayer(error);}
+        );
+    </script>
+</body>
+</html>
