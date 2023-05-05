@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const people = require('./routes/people')
-const auth = require('./routes/auth')
+const people = require('../routes/people')
+const auth = require('../routes/auth')
 
 // static asset
 app.use(express.static('./methods-public'))
