@@ -1,9 +1,10 @@
-const nodemailer = require("nodemailer");
-const sgMail = require("@sendgrid/mail");
+const nodemailer = require("nodemailer"); // npm for sending an email from nodejs. now sending though ethereal
+const sgMail = require("@sendgrid/mail"); // Send Grid is server for email sending for real production.
 
 const sendEmailEthereal = async (req, res) => {
   let testAccout = await nodemailer.createTestAccount();
 
+  //below, it is host to sending an email
   const transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
     port: 587,
@@ -12,7 +13,7 @@ const sendEmailEthereal = async (req, res) => {
       pass: "yWkzSEsnvPbFUvev64",
     },
   });
-
+  //below, it is info of sending and receiving email. The host that sending email can be unlike as "from" in infomation email 
   let info = await transporter.sendMail({
     from: '"Coding Addict", <codingaddict@gmail.com>',
     to: "bar@example.com",

@@ -2,6 +2,11 @@ require("dotenv").config();
 require("express-async-errors");
 
 // extra security packages
+// - helmet : security npm package.
+// - cors : let other domain can access our routes. (let others see our frontend)
+// - xss-clean : protect attacking in check incoming input from hackers.
+// - express-rate-limit : to limit incoming requests.
+
 const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");

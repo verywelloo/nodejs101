@@ -7,4 +7,12 @@
 /6.5-jobster-api-clone
 /7-file-upload-clone
 /8-send-email-clone
+/9-stripe-payment-clone
 /.gitignore
+/basic-http
+/test.js
+/.vscode
+/10-e-commerce-api-clone
+/htmlCss
+/docker
+/node-mysql-crud

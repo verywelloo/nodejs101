@@ -74,7 +74,7 @@ const updateUser = async (req, res) => {
 
   await user.save();
 
-  const token = await user.createJWT();
+  const token = await user.createJWT(); // update name in the token for future using.
 
   res.status(StatusCodes.OK).json({
     user: {

@@ -152,10 +152,11 @@ const showStats = async (req, res) => {
         count: { $sum: 1 },
       },
     },
-    { $sort: { "_id.year": -1, "_id.month": -1 } },
+    { $sort: { "_id.year": -1, "_id.month": -1 } }, // it's get oldest year and month // {2024/8,2023/7,2022/6}
     { $limit: 6 },
   ]);
 
+  //[{ _id : { year : 2024, month : 2}, count : 1},...]
   monthlyApplications = monthlyApplications
     .map((item) => {
       const {
@@ -170,7 +171,7 @@ const showStats = async (req, res) => {
 
       return { date, count };
     })
-    .reverse();
+    .reverse(); // before : {2024/8,2023/7,2021/6}, count : 1}, after: {2022/6,2023/7,2024/8}
 
   res.status(StatusCodes.OK).json({ defaultStats, monthlyApplications });
 };

@@ -3,22 +3,22 @@ const { StatusCodes } = require("http-status-codes");
 const { BadRequest, Unauthenticated } = require("../errors");
 
 const register = async (req, res) => {
-  // John said it is repetation(repeat) for this error.
+  // John said it is repetition(repeat) for this error.
   //   if(!name || !email || !password) {
   //     throw new BadRequest('Please provide name, email and password')
   //   }
 
   // User.create{...tempUser} means {name: ..., email: ..., password: ...}
   // User.create{tempUser} means {tempUser : {name: ..., email: ..., password: ...}}
+  // tested : {...body} vs body is the same console.log
+  // John said it is for all validation scan in each value.
   const user = await User.create({ ...req.body });
 
   // Below, we will create token for auth. The full function is in user models.
   const token = user.createJWT();
-  // user: { name: user.name} It is using on the forntend.
+  // user: { name: user.name} It is using on the frontend.
   // user in {name : user.getName()} from the user variable(const user =await User.create({...req.body})).
-  res
-    .status(StatusCodes.CREATED)
-    .json({ user: { name: user.name }, token });
+  res.status(StatusCodes.CREATED).json({ user: { name: user.name }, token });
 };
 
 const login = async (req, res) => {
