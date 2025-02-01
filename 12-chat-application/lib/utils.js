@@ -12,3 +12,5 @@ const generateToken = (userId, res) => {
     secure: process.env.NODE_ENV !== 'development', // 'production' !== 'development' makes secure: true
   });
 };
+
+module.exports = generateToken

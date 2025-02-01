@@ -2,10 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const app = express();
 
+const cookieParser = require('cookie-parser')
 const connectDB = require('../lib/db.js');
 const authRoutes = require('../routes/auth.route.js');
 
 app.use(express.json()); // use for req.body to get json info
+app.use(cookieParser())
 
 app.use('/api/v1/auth', authRoutes);
 
