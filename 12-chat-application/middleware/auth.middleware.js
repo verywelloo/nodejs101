@@ -3,7 +3,7 @@ const User = require('../models/user.model');
 
 const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.cookies.jwt;
+    const token = req.cookies.jwt;
     if (!token) {
       return res
         .status(401)
