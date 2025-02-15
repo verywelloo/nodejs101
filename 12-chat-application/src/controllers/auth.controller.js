@@ -7,6 +7,9 @@ const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
 
   try {
+    if (!fullName || !email || !password) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
     if (password.length < 6) {
       return res
         .status(400)
@@ -31,6 +34,8 @@ const signup = async (req, res) => {
 
       res.status(201).json({
         _id: newUser._id,
+        fullName: newUser.fullName,
+        email: newUser.email,
         profilePic: newUser.profilePic,
       });
     } else {
@@ -82,7 +87,7 @@ const logout = (req, res) => {
 const updateProfile = async (req, res) => {
   try {
     const { profilePic } = req.body; // working with FileReader in frontend
-    console.log(req.body)
+    
     const userId = req.user._id;
     if (!profilePic) {
       return res.status(400).json({ message: 'Profile pic is required' });
@@ -105,13 +110,12 @@ const updateProfile = async (req, res) => {
 
 const checkAuth = (req, res) => {
   try {
-    res.status(200).json(req.user)
+    res.status(200).json(req.user);
   } catch (error) {
-    console.log("Error in checkAuth controller", error.message)
+    console.log('Error in checkAuth controller', error.message);
     res.status(500).json({ message: 'Internal Server Error' });
-
   }
-}
+};
 module.exports = {
   signup,
   login,

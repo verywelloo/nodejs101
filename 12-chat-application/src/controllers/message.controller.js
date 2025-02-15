@@ -21,10 +21,11 @@ const getMessages = async (req, res) => {
     const myId = req.user._id;
 
     const message = await Message.find({
-        $or:[ // $or = or condition
-            {senderId: myId, receiverId:userToChatId},
-            {senderId:userToChatId, receiverId: myId}
-        ]
+      $or: [
+        // $or = or condition
+        { senderId: myId, receiverId: userToChatId },
+        { senderId: userToChatId, receiverId: myId },
+      ],
     });
 
     res.status(200).json(message);
@@ -34,37 +35,37 @@ const getMessages = async (req, res) => {
   }
 };
 
-const sendMessage = async (req,res) => {
-try {
-  const {text, image} = req.body // image that send by user
-  const {id: receiverId} = req.params
-  const senderId = req.user._id
+const sendMessage = async (req, res) => {
+  try {
+    const { text, image } = req.body; // image that send by user
+    const { id: receiverId } = req.params;
+    const senderId = req.user._id;
 
-  let imageUrl;
-  if (image) {
-    // upload base64 image to cloudinary
-    const uploadResponse = await cloudinary.uploader.upload(image)
-    imageUrl = uploadResponse.secure_url
+    let imageUrl;
+    if (image) {
+      // upload base64 image to cloudinary
+      const uploadResponse = await cloudinary.uploader.upload(image);
+      imageUrl = uploadResponse.secure_url;
+    }
+
+    const newMessage = new Message({
+      senderId,
+      receiverId,
+      text,
+      image: imageUrl,
+    });
+
+    await newMessage.save();
+
+    // socket.io
+
+    res.status(201).json(newMessage);
+    res.status().json();
+  } catch (error) {
+    console.log('Error in sendMessage controller: ', error.message);
+    res.status(500).json({ error: 'Internal server error' });
   }
-
-  const newMessage =  new Message({
-    senderId,
-    receiverId,
-    text,
-    image: imageUrl,
-  })
-
-  await newMessage.save()
-
-  // socket.io
-
-  res.status(201).json(newMessage)
-  res.status().json()
-} catch (error) {
-  console.log("Error in sendMessage controller: ", error.message)
-  res.status(500).json({error: "Internal server error"})
-}
-}
+};
 
 module.exports = {
   getUserForSideBar,
